@@ -35,7 +35,7 @@ export default function AboutSection({ isActive }) {
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
               <p className="text-gray-300 leading-relaxed">
                 As a fresh graduate in Information Technology, I am eager to start my career in a role where I can
-                contribute, learn, and grow. I'm passionate about creating web and mobile applications and excited to
+                contribute, learn, and grow. I&apos;m passionate about creating web and mobile applications and excited to
                 explore new technologies while working with a team that values innovation and continuous learning.
               </p>
             </div>

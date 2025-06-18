@@ -77,7 +77,7 @@ export default function ExperienceSection({ isActive }) {
 
           <div className="mt-6 p-4 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-lg border border-cyan-500/20">
             <p className="text-gray-300 italic">
-              This project was key in completing the company's Business Information Management System (BIMS) and played
+              This project was key in completing the company&apos;s Business Information Management System (BIMS) and played
               a major role in helping the company market the system and attract new clients.
             </p>
           </div>
