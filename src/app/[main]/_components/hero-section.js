@@ -1,5 +1,6 @@
 "use client"
 import { ChevronDown, Download, Github, Linkedin, Eye } from "lucide-react"
+import Image from "next/image"
 
 export default function HeroSection({ isActive }) {
   const handleViewCV = () => {
@@ -17,16 +18,22 @@ export default function HeroSection({ isActive }) {
 
   return (
     <section
-      className={`min-h-screen flex items-center justify-center px-4 transition-all duration-1000 ${
+      className={`min-h-screen flex items-center justify-center px-4 pt-32 transition-all duration-1000 ${
         isActive ? "opacity-100 translate-y-0" : "opacity-50 translate-y-10"
       }`}
     >
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-8 relative">
-          <div className="w-32 h-32 mx-auto mb-6 relative">
+          <div className="w-40 h-40 mx-auto mb-6 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full animate-pulse"></div>
-            <div className="absolute inset-2 bg-gray-900 rounded-full flex items-center justify-center">
-              <span className="text-4xl font-bold text-white">JV</span>
+            <div className="absolute inset-2 bg-gray-900 rounded-full overflow-hidden">
+              <Image
+                src="/jcv.JPG"
+                alt="Jairus Valencia"
+                width={156}
+                height={156}
+                className="object-cover w-full h-full object-[50%_35%]"
+              />
             </div>
           </div>
         </div>
