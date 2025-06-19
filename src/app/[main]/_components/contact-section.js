@@ -1,7 +1,12 @@
 "use client"
 import { Mail, Phone, MapPin, Linkedin, Send } from "lucide-react"
+import { useState } from 'react'
+import { submitContactForm } from '../_actions/contact'
 
 export default function ContactSection({ isActive }) {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+
   const contactInfo = [
     {
       icon: Mail,
@@ -43,6 +48,23 @@ export default function ContactSection({ isActive }) {
       phone: "0919 060 5094",
     },
   ]
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ type: '', text: '' });
+
+    const formData = new FormData(e.target);
+    const result = await submitContactForm(formData);
+
+    if (result.success) {
+      setMessage({ type: 'success', text: 'Message sent successfully! Check your inbox/spam for the confirmation email.' });
+      e.target.reset();
+    } else {
+      setMessage({ type: 'error', text: result.error });
+    }
+    setLoading(false);
+  };
 
   return (
     <section
@@ -107,10 +129,12 @@ export default function ContactSection({ isActive }) {
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-cyan-500/20">
             <h3 className="text-2xl font-semibold text-white mb-6">Send a Message</h3>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">Name</label>
                 <input
+                  name="name"
+                  required
                   type="text"
                   className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none transition-colors"
                   placeholder="Your Name"
@@ -120,6 +144,8 @@ export default function ContactSection({ isActive }) {
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">Email</label>
                 <input
+                  name="email"
+                  required
                   type="email"
                   className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none transition-colors"
                   placeholder="your.email@example.com"
@@ -129,6 +155,8 @@ export default function ContactSection({ isActive }) {
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">Subject</label>
                 <input
+                  name="subject"
+                  required
                   type="text"
                   className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none transition-colors"
                   placeholder="Subject"
@@ -138,18 +166,29 @@ export default function ContactSection({ isActive }) {
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">Message</label>
                 <textarea
+                  name="message"
+                  required
                   rows="5"
                   className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none transition-colors resize-none"
                   placeholder="Your message..."
                 ></textarea>
               </div>
 
+              {message.text && (
+                <div className={`p-4 rounded-lg ${
+                  message.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {message.text}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-3 rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
+                disabled={loading}
+                className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-3 rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
               >
                 <Send size={18} />
-                <span>Send Message</span>
+                <span>{loading ? 'Sending...' : 'Send Message'}</span>
               </button>
             </form>
           </div>
